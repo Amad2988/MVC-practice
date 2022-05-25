@@ -1,5 +1,6 @@
 const express = require('express')
 const getData = require('./Controllers/getData')
+const products = require('./Models/products')
 const productData = getData()
 
 const app = express()
@@ -30,6 +31,13 @@ app.get('/products/new', (req,res) => {
 
 app.post('/products', (req, res) =>{
     console.log(req.body)
+})
+
+app.get('/products/:id',(req, res)=>{
+    console.log(req.params)
+    const result = products.filter(item => item.id === Number(req.params.id))
+    // console.log(result)
+    res.render('productId', {product: result[0]})
 })
 
 app.listen(PORT, () =>{
